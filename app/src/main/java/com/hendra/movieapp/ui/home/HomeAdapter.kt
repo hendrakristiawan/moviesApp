@@ -34,7 +34,7 @@ class HomeAdapter(private val list: List<String>) : RecyclerView.Adapter<ItemAcc
 
 class ItemAccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    var poster: ImageView = itemView.findViewById(R.id.posterImage)
+    private var poster: ImageView = itemView.findViewById(R.id.posterImage)
 
     fun bindData(item: String) {
         val res: Resources = itemView.context.resources
