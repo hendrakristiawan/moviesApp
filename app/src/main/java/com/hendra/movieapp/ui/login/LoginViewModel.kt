@@ -19,7 +19,7 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun checkSession() {
-        if (SharedPref.getSessionSignIn()) {
+        if (SharedPref.getSessionSignIn().isNotEmpty()) {
             mutableSignIn.postValue(Resource.success(Unit))
         }
     }
@@ -32,7 +32,7 @@ class LoginViewModel : ViewModel() {
             !isValidPassword(password) -> mutableSignIn.postValue(Resource.error(ValidationType.INVALID_PASSWORD))
             else -> {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    SharedPref.saveSuccessSignIn()
+                    SharedPref.saveSuccessSignIn(email)
                     mutableSignIn.postValue(Resource.success(Unit))
                 }, 3000)
             }

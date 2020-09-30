@@ -11,11 +11,11 @@ object SharedPref {
         this.sharedPref = sharedPref
     }
 
-    fun saveSuccessSignIn() {
-        sharedPref?.edit()?.putBoolean(USER_LOGGED_IN, true)?.apply()
+    fun saveSuccessSignIn(email: String) {
+        sharedPref?.edit()?.putString(USER_LOGGED_IN, email)?.apply()
     }
 
-    fun getSessionSignIn(): Boolean = sharedPref?.getBoolean(USER_LOGGED_IN, false) ?: false
+    fun getSessionSignIn(): String = sharedPref?.getString(USER_LOGGED_IN, "") ?: ""
 
     fun clearData() {
         sharedPref?.edit()?.clear()?.apply()

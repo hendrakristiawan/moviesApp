@@ -6,22 +6,14 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.hendra.movieapp.MainActivity
 import com.hendra.movieapp.R
 import com.hendra.movieapp.utils.ErrorResource
 import com.hendra.movieapp.utils.ResourceState
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.support.HasSupportFragmentInjector
-import javax.inject.Inject
 
-class LoginActivity : AppCompatActivity(), HasSupportFragmentInjector, View.OnClickListener {
-
-    @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
-
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var loginBtn: Button
@@ -49,8 +41,6 @@ class LoginActivity : AppCompatActivity(), HasSupportFragmentInjector, View.OnCl
             }
         })
     }
-
-    override fun supportFragmentInjector() = dispatchingAndroidInjector
 
     override fun onClick(view: View?) {
         loginViewModel.signIn(emailEditText.text.toString(), passwordEditText.text.toString())

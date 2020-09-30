@@ -15,8 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.hendra.movieapp.R
+import com.hendra.movieapp.di.Injectable
+import com.hendra.movieapp.utils.ResourceState
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), Injectable {
 
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var emailText: TextView
@@ -27,28 +29,28 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        profileViewModel =
-            ViewModelProviders.of(this).get(ProfileViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
         emailText = root.findViewById(R.id.emailTextView)
         profile = root.findViewById(R.id.imageView)
-        emailText.text = "fdasfdsaf@fdfadsfds.com"
-        this.context?.let {
-            try {
-                val res = it.resources
-                val imageStream = res.assets.open("harry_potter_poster.jpg")
-                val drawable: Drawable = BitmapDrawable(res, imageStream)
-                Glide.with(this)
-                    .load(drawable)
-                    .circleCrop()
-                    .placeholder(ColorDrawable(Color.GRAY))
-                    .into(profile)
-            } catch (e: Exception) {
-                e.printStackTrace()
+        profileViewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
+        profileViewModel.emailLiveData.observe(viewLifecycleOwner, Observer {
+            if (it.status == ResourceState.SUCCESS) {
+                it.data?.let { email -> emailText.text = email }
+                this.context?.let { ctx ->
+                    try {
+                        val res = ctx.resources
+                        val imageStream = res.assets.open("harry_potter_poster.jpg")
+                        val drawable: Drawable = BitmapDrawable(res, imageStream)
+                        Glide.with(this)
+                            .load(drawable)
+                            .circleCrop()
+                            .placeholder(ColorDrawable(Color.GRAY))
+                            .into(profile)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
             }
-        }
-        profileViewModel.text.observe(viewLifecycleOwner, Observer {
-
         })
         return root
     }
