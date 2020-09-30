@@ -14,9 +14,7 @@ import com.bumptech.glide.Glide
 import com.hendra.movieapp.R
 
 
-class HomeAdapter : RecyclerView.Adapter<ItemAccountViewHolder>() {
-
-    private var list = mutableListOf<String>()
+class HomeAdapter(private val list: List<String>) : RecyclerView.Adapter<ItemAccountViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAccountViewHolder {
         return ItemAccountViewHolder(
@@ -30,11 +28,6 @@ class HomeAdapter : RecyclerView.Adapter<ItemAccountViewHolder>() {
 
     override fun onBindViewHolder(holder: ItemAccountViewHolder, position: Int) {
         holder.bindData(list[position])
-    }
-
-    fun populateData(list: List<String>) {
-        this.list.clear()
-        this.list.addAll(list)
     }
 
 }

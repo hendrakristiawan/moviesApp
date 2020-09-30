@@ -16,7 +16,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var recycler: RecyclerView
-    private val adapterList: HomeAdapter = HomeAdapter()
+    private lateinit var adapterList: HomeAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +24,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        initObserver()
         recycler = view.findViewById(R.id.recyclerPoster)
-        initRecycler()
-        homeViewModel.showList()
+        initObserver()
         return view
     }
 
@@ -42,7 +40,10 @@ class HomeFragment : Fragment() {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         homeViewModel.listPosterLiveData.observe(viewLifecycleOwner, Observer {
             if (it.status == ResourceState.SUCCESS) {
-                it?.data?.let { list -> adapterList.populateData(list) }
+                it?.data?.let { list ->
+                    adapterList = HomeAdapter(list)
+                    initRecycler()
+                }
             }
         })
     }

@@ -10,7 +10,7 @@ class HomeViewModel : ViewModel() {
     private val mutableListPoster: MutableLiveData<Resource<List<String>>> = MutableLiveData()
     val listPosterLiveData: LiveData<Resource<List<String>>> = mutableListPoster
 
-    fun showList() {
+    init {
         mutableListPoster.postValue(
             Resource.success(
                 listOf(
