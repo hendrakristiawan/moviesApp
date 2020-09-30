@@ -14,7 +14,8 @@ import com.bumptech.glide.Glide
 import com.hendra.movieapp.R
 
 
-class HomeAdapter(private val list: List<String>) : RecyclerView.Adapter<ItemAccountViewHolder>() {
+class HomeAdapter(private val list: List<Pair<Int, String>>, private val onclick: (Int) -> Unit) :
+    RecyclerView.Adapter<ItemAccountViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAccountViewHolder {
         return ItemAccountViewHolder(
@@ -27,7 +28,9 @@ class HomeAdapter(private val list: List<String>) : RecyclerView.Adapter<ItemAcc
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: ItemAccountViewHolder, position: Int) {
-        holder.bindData(list[position])
+        holder.bindData(list[position].second) {
+            onclick(list[position].first)
+        }
     }
 
 }
@@ -36,9 +39,15 @@ class ItemAccountViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) 
 
     private var poster: ImageView = itemView.findViewById(R.id.posterImage)
 
-    fun bindData(item: String) {
-        val res: Resources = itemView.context.resources
+    init {
 
+    }
+
+    fun bindData(item: String, onclick: (Unit) -> Unit) {
+        val res: Resources = itemView.context.resources
+        itemView.setOnClickListener {
+            onclick(Unit)
+        }
         try {
             val imageStream = res.assets.open(item)
             val drawable: Drawable = BitmapDrawable(res, imageStream)

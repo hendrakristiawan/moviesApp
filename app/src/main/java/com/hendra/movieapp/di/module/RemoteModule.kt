@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class RemoteModule {
 
     companion object {
-        private const val BASE_URL = ""
+        private const val BASE_URL = "http://omdbapi.com/"
         private const val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     }
 

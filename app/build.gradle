@@ -68,6 +68,7 @@ dependencies {
     implementation deps.support.recyclerview
     kapt deps.glide.compiler
 
+    implementation deps.slider
     implementation deps.rxjava2
     implementation deps.rx_android
 

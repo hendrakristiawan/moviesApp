@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hendra.movieapp.R
+import com.hendra.movieapp.ui.detail.DetailActivity
 import com.hendra.movieapp.utils.ResourceState
 
 class HomeFragment : Fragment() {
@@ -41,7 +42,13 @@ class HomeFragment : Fragment() {
         homeViewModel.listPosterLiveData.observe(viewLifecycleOwner, Observer {
             if (it.status == ResourceState.SUCCESS) {
                 it?.data?.let { list ->
-                    adapterList = HomeAdapter(list)
+                    adapterList = HomeAdapter(list) { pos ->
+                        this@HomeFragment.activity?.applicationContext?.let { ctx ->
+                            startActivity(
+                                DetailActivity.startActivity(ctx, pos)
+                            )
+                        }
+                    }
                     initRecycler()
                 }
             }
